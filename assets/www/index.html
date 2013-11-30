@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RescueMakati</title>
+	<meta charset="utf-8" />
+  	<meta name="format-detection" content="telephone=no" />
+  	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+	<!-- <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css"> -->
+	<link rel="stylesheet" href="assets/css/font.css" type="text/css">
+	<link rel="stylesheet" href="assets/css/holo-dark/base.css">
+	<link rel="stylesheet" href="assets/css/holo-dark/action-bars.css"> 
+	<link rel="stylesheet" href="assets/css/holo-dark/animations.css">
+	
+	<link rel="stylesheet" href="assets/css/holo-dark/buttons.css">
+	<link rel="stylesheet" href="assets/css/holo-dark/content.css">
+	<link rel="stylesheet" href="assets/css/holo-dark/dialogs.css">
+	<link rel="stylesheet" href="assets/css/holo-dark/forms.css">
+	<link rel="stylesheet" href="assets/css/holo-dark/icomoon.css">
+	<link rel="stylesheet" href="assets/css/holo-dark/lists.css">
+	<link rel="stylesheet" href="assets/css/holo-dark/sliders.css">
+	<link rel="stylesheet" href="assets/css/holo-dark/spinners.css">
+	<link rel="stylesheet" href="assets/css/holo-dark/stack.css">
+	<link rel="stylesheet" href="assets/css/holo-dark/tabs.css">
+	<link rel="stylesheet" href="assets/css/holo-dark/toasts.css"> 
+	<link rel="stylesheet" href="assets/css/font-awesome.min.css">
+	<link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+	
+	<!--Custom CSS-->
+	<style type="text/css">
+		.content{
+			color:black;
+    		background-color:white;
+			/*background: url("assets/images/binding_light/binding_light.png");*/
+		}
+		body .page{
+			background: #FFF;
+			color:#000;
+		}
+
+		header a i {
+			color:white; 
+			margin-top:5px;
+		}
+		
+		.info-div, .hotlines-div{
+			display: none;
+			color:black;
+		}
+		.home-div{
+			height:100%;
+		}
+		#map-canvas{
+		  	margin: 0;
+	        padding: 0;
+	        height: 50%;
+	      
+		}
+		.ebutton{
+			text-align: center;
+			width:99%;
+		}
+		.info-div form label, .info-div form , .info-div form .flex-group input, .info-div form .flex-group ::-webkit-input-placeholder, .info-div form input::-webkit-input-placeholder {
+			color: black;
+		}
+		.black{
+			color: black;
+		}
+	</style>
+
+</head>
+
+<body>
+<!--page-->
+ <div class="page">
+
+ 	<!--header-->
+ 	<header class="action-bar">
+ 	<a href="javascript: void(0);" class="app-icon action">
+ 	  <i style="" class="fa fa-plus-square fa-lg"></i>
+ 	</a>
+ 	  <h1 class="title"> &nbsp;RescueMakati</h1>
+ 	</header>
+
+ 	<!--tab-->
+    <nav class="tab-fixed">
+	    <ul class="tab-inner">
+	      <li id="tab1" class="active"><a href="#" class="" data-tab="tab1" data-ignore="true">Home</a></li>
+	      <li id="tab2" class=""><a href="#"  data-tab="tab2" data-ignore="true">Info</a></li>
+	      <li id="tab3" class=""><a href="#"  data-tab="tab3" data-ignore="true">Hotlines</a></li>
+	    </ul>
+    </nav>
+
+    <!--content -->
+    <div class="content">
+    	
+    	<!--Content of Home-->
+    	
+    	<div class="home-div" style="margin:0px; max-height:800px;">
+    	
+    		<!--Map Container-->
+    		 <div id="map-canvas"></div>
+
+    		 <!--Address Container-->
+    		 <div style=" border-top: 5px solid #393696; border-bottom: 5px solid #393696;text-align:center;  max-height:15%; padding:5px; background-color:#7976D6;">
+    		 <span><i class="fa fa-location-arrow"></i><small id="location" style="padding:0px;"></small></span>
+    		 </div>
+
+    		 <b style="display:block; margin-left:10px"><i class="fa fa-exclamation-circle"></i> Choose a type of Emergency:</b>
+    		 <center>
+    		 <button class="btn ambulance-btn ebutton" style=""><i class="fa fa-h-square">&nbsp;</i>Ambulance</button><br>
+    		 <button class="btn police-btn ebutton" style="" ><i class="fa fa-shield">&nbsp;</i>Police</button><br>
+    		 <button class="btn fire-truck-btn ebutton" style=" "><i class="fa fa-fire">&nbsp;</i>Fire Truck</button><br> 
+    		</center>
+    		 
+    		
+    	</div>
+
+    	<!--Content of Info-->
+    	<div class="info-div" >
+    	
+    		<form class="form-flex inset" >
+    		  <label class="block-label">Personal Info</label>
+    		  <div class="flex-group">
+    		    <input type="text" placeholder="Full Name" class="input-text flex1">
+    		    <input style="width:30%;" type="age" maxlength="2"  placeholder="Age" class="input-text flex1">
+    		  </div>
+    		  	<input type="tel" class="input-text flex2 mobile-input black" placeholder="Mobile Number">
+    		  
+    		  <center>
+            	<button type="button" class="btn" style="width:50%;">Update</button>
+          	  </center>
+    		  
+    		</form>
+    	
+      	</div>
+
+      	<!--Content of Hotlines-->
+      	<div class="hotlines-div">
+      		<form class="" >
+      		  <label class="block-label">hotlines</label>
+      		  <div class="flex-group">
+      		    <input type="text" placeholder="First Name" class="input-text flex1">
+      		    <input type="text" placeholder="Last Name" class="input-text flex1">
+      		  </div>
+
+      		  <label class="block-label">Address</label>
+      		  
+      		</form>
+      	</div>
+
+    </div>
+
+    <div class="dialogs">
+      <!-- This is a requried container for your dialogs. All dialogs that you want to display in this page go here -->
+    </div>
+
+  </div>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+<script type="text/javascript" charset="utf-8" src="assets/js/cordova-2.5.0.js"></script>
+<script src="assets/js/quo.js" type="text/javascript"></script>
+<script src="assets/js/gmaps.js" type="text/javascript"></script>
+<script src="assets/js/tabs.js" type="text/javascript"></script>
+
+
+
+<script>
+	document.addEventListener("deviceready", onDeviceReady, false);
+	$$(document).ready(function(){
+		 
+		/*Transition of pages when tab is pressed.*/
+			$$(".info-div").hide();	
+			$$(".hotlines-div").hide();	
+			$$(".home-div").show();	
+			
+			$$("#tab1").tap(function(){//show home-div
+				$$(".info-div").hide();	
+				$$(".hotlines-div").hide();	
+				$$(".home-div").show();	
+			});
+			$$("#tab2").tap(function(){//show info-div
+				$$(".home-div").hide();	
+				$$(".hotlines-div").hide();	
+				$$(".info-div").show();	
+			});
+			$$("#tab3").tap(function(){ //show hotlines-div
+				$$(".home-div").hide();	
+				$$(".info-div").hide();	
+				$$(".hotlines-div").show();
+			});
+		
+
+
+	});
+
+	 function onDeviceReady() {
+     	
+     	var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+     	db.transaction(populateDB, errorCB, successCB);
+     	// db.transaction(checkDB, errorCB, successCB);
+        // db.transaction(populateDB, errorCB, successCB);
+     }
+     function populateDB(tx) {
+             alert('populate');
+             // tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
+             // tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
+     }
+     function initDB(tx){
+     	// tx.executeSql('CREATE TABLE IF NOT EXISTS INFO (id unique, name text, age text, mobile text)');
+     	alert('init');
+     }
+     function checkDB(tx){
+     	tx.executeSql('SELECT * FROM INFO', [], querySuccess, errorCB);
+     }
+     function querySuccess(tx, results){
+     	alert(results.rows.length);
+     }
+     function successCB(){
+     	alert("succ");
+     }
+     function errorDB(tx, err){
+     	alert(err);
+     }
+
+
+ 
+
+</script>
+
+
+</body>
+</html>
