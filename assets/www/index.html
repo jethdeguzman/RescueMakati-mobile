@@ -127,7 +127,7 @@
     		  	<input type="tel" class="input-text flex2 mobile-input black" placeholder="Mobile Number">
     		  
     		  <center>
-            	<button type="button" class="btn" style="width:50%;">Update</button>
+            	<button class="updateinfo-btn" type="button" class="btn" style="width:50%;">Update</button>
           	  </center>
     		  
     		</form>
@@ -164,7 +164,9 @@
 
 
 
+
 <script>
+
 	//device initialization
 	document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -172,7 +174,8 @@
 	google.maps.event.addDomListener(window, 'load', initialize);
 	
 	function onDeviceReady(){
-		
+			
+	    	
 		/*Transition of pages when tab is pressed.*/
 			$$(".info-div").hide();	
 			$$(".hotlines-div").hide();	
@@ -193,9 +196,42 @@
 				$$(".info-div").hide();	
 				$$(".hotlines-div").show();
 			});
+			$$(".ebutton").tap(function(){
+				
+			});
+			$$(".updateinfo-btn").tap(function(){
+				localStorage.info = "ok";
+			});
+
+			// $$(".ebutton").prop('disabled', false);
+			checkInfo();
 	}
 
- 
+	//check internet connection of user
+	function checkInternet(){
+
+	}
+
+	//check info details of user
+	function checkInfo(){
+		alert(localStorage.info);
+		if(!localStorage.info){//user haven't updated his/her info
+			statusEbuttons(true);
+
+		}else{// user already updated info
+			statusEbuttons(false);
+		}
+	}
+
+
+	function statusEbuttons(status){
+		if(status){
+			$$(".ebutton").attr('disabled', true);
+		}else{
+			$$(".ebutton").removeAttr('disabled');
+		}
+		
+	}
 
 </script>
 
