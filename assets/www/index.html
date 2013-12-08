@@ -136,16 +136,17 @@
 
       	<!--Content of Hotlines-->
       	<div class="hotlines-div">
-      		<form class="" >
-      		  <label class="block-label">hotlines</label>
-      		  <div class="flex-group">
-      		    <input type="text" placeholder="First Name" class="input-text flex1">
-      		    <input type="text" placeholder="Last Name" class="input-text flex1">
-      		  </div>
-
-      		  <label class="block-label">Address</label>
-      		  
-      		</form>
+      		<div style="margin-top:20px;" >
+	          <b style="display:block;"><i class="icon-info-sign"></i>Other Emergency Hotlines</b><br>
+	           <div style="padding:5px 5px 50px 5px;">
+	              <a  class="btn hotline" data-number="8701920" style="width:100%; display:block; text-align:center;"><i class="icon-phone-sign">&nbsp;</i>870-1920</a>
+	              <a  class="btn hotline" data-number="8701923" style="width:100%; display:block; text-align:center; margin-left:0.5px;"><i class="icon-phone-sign">&nbsp;</i>870-1923</a>
+	              <a  class="btn hotline" data-number="8701926" style="width:100%; display:block; text-align:center; margin-left:0.5px;"><i class="icon-phone-sign">&nbsp;</i>870-1926</a>
+	              <a  class="btn hotline" data-number="8701929" style="width:100%; display:block; text-align:center; margin-left:0.5px;"><i class="icon-phone-sign">&nbsp;</i>870-1929</a>
+	              <a class="btn hotline" data-number="8701932" style="width:100%; display:block; text-align:center; margin-left:0.5px;"><i class="icon-phone-sign">&nbsp;</i>870-1932</a>
+	              <a class="btn hotline" data-number="8701935" style="width:100%; display:block; text-align:center; margin-left:0.5px;"><i class="icon-phone-sign">&nbsp;</i>870-1935</a>
+	          </div>
+	      </div>
       	</div>
 
     </div>
@@ -164,9 +165,14 @@
 
 
 <script>
+	//device initialization
 	document.addEventListener("deviceready", onDeviceReady, false);
-	$$(document).ready(function(){
-		 
+
+	//map initialization	
+	google.maps.event.addDomListener(window, 'load', initialize);
+	
+	function onDeviceReady(){
+		
 		/*Transition of pages when tab is pressed.*/
 			$$(".info-div").hide();	
 			$$(".hotlines-div").hide();	
@@ -187,40 +193,7 @@
 				$$(".info-div").hide();	
 				$$(".hotlines-div").show();
 			});
-		
-
-
-	});
-
-	 function onDeviceReady() {
-     	
-     	var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
-     	db.transaction(populateDB, errorCB, successCB);
-     	// db.transaction(checkDB, errorCB, successCB);
-        // db.transaction(populateDB, errorCB, successCB);
-     }
-     function populateDB(tx) {
-             alert('populate');
-             // tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
-             // tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
-     }
-     function initDB(tx){
-     	// tx.executeSql('CREATE TABLE IF NOT EXISTS INFO (id unique, name text, age text, mobile text)');
-     	alert('init');
-     }
-     function checkDB(tx){
-     	tx.executeSql('SELECT * FROM INFO', [], querySuccess, errorCB);
-     }
-     function querySuccess(tx, results){
-     	alert(results.rows.length);
-     }
-     function successCB(){
-     	alert("succ");
-     }
-     function errorDB(tx, err){
-     	alert(err);
-     }
-
+	}
 
  
 
