@@ -1,5 +1,8 @@
       var map;
       var pos;
+      var lat;
+      var lng;
+      var address;
 function initialize() {
   var mapOptions = {
     zoom: 15,
@@ -30,11 +33,11 @@ function initialize() {
       map.setCenter(pos);
       
 
-      var lat = position.coords.latitude;
-      var lng = position.coords.longitude; 
+      lat = position.coords.latitude;
+      lng = position.coords.longitude; 
       
       var url = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=true"; 
-      var address; 
+      
        
        $.ajax({
           type : "get",

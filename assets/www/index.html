@@ -176,7 +176,7 @@
 <script>
 
 	//device initialization
-	
+
 
 	//map initialization	
 	google.maps.event.addDomListener(window, 'load', initialize);
@@ -190,6 +190,7 @@
 		$(".home-div").show();	
 		
 		$("#tab1").click(function(e){//show home-div
+
 			e.preventDefault();
 			x = '#'+ $(this).attr('id');
 			showHome(x);
@@ -221,8 +222,10 @@
 		// checkInfo();
 	});
 
-	//check internet connection of user
+	//check internet connection of user thru server request
 	function checkInternet(){
+		//return true if internet is ok
+		//return false if intenet is not ok
 		var x = false;
 		$.ajax({
 			url : 'http://192.168.1.104:1337/check',
@@ -238,20 +241,6 @@
 		});
 		return x;
 	}
-
-	//check info details of user
-	function checkInfo(){
-		alert(localStorage.info);
-		if(!localStorage.info){//user haven't updated his/her info
-			statusEbuttons(true);
-
-			updateInfoAlert();
-
-		}else{// user already updated info
-			statusEbuttons(false);
-		}
-	}
-
 
 	function statusEbuttons(status){
 		if(status){
@@ -278,7 +267,7 @@
 		$(".home-div").show();
 		$(".tab").parent().removeClass("active");
 		$(x).parent().addClass("active");
-		initialize();
+		initialize(); //map initialization
 	}
 
 	//show info tab
@@ -298,6 +287,42 @@
 		$(".tab").parent().removeClass("active");
 		$(x).parent().addClass("active");
 	}
+
+	//sending emergency request to server
+	/**
+		request = emergency button
+	**/
+	function sendEmergency(request){
+		var server = "";
+		var data = {request : request, name : getUserInfo().name, age : getUserInfo().age, mobile :getUserInfo().mobile, lat : getMapInfo().lat, lng : getMapInfo().lng, address : getMapInfo().address };
+
+		$.ajax({
+			url : server,
+			type : "POST",
+			data : data,
+			success :function(){
+
+			}
+		});
+	}
+	//setting user info 
+	function setUserInfo(name, age, mobile){
+		var userinfo = {name : name, age : age, mobile : mobile};
+		localStorage.userinfo = JSON.stringify(userinfo);
+	}
+
+
+	//retrieve Map info from gmaps.js
+	function getMapInfo(){
+		return {lat : lat, lng : lng, address : address};
+	}
+	//retrieve user info from localStorage
+	function getUserInfo(){
+		return JSON.parse(localStorage.userinfo);
+	}
+
+
+
 </script>
  <script src="assets/js/fingerblast.js"></script>
   <script src="assets/js/prettify.js"></script>
