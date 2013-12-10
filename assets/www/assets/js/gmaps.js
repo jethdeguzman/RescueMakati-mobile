@@ -36,14 +36,14 @@ function initialize() {
       var url = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=true"; 
       var address; 
        
-       $$.ajax({
+       $.ajax({
           type : "get",
           url: url,
           success:function(data){
       //alert(data.results[0].formatted_address);
           //   console.log(data);
             address = data.results[0].formatted_address;
-            $$("#location").html(data.results[0].formatted_address);
+            $("#location").html(data.results[0].formatted_address);
           // //  alert(data.results[0].geometry.location.lat);
           //   $$(".lat-span").text(data.results[0].geometry.location.lat);
           //   $$(".lng-span").text(data.results[0].geometry.location.lng);

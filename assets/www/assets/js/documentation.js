@@ -27,10 +27,10 @@ $(function () {
       }, false);
     }
 
-    document.querySelector('#show-toast').addEventListener('touchend', function () {
-      var toast = new fries.Toast({ content: "Hi, I'm a Toast notification." });
+    // document.querySelector('#show-toast').addEventListener('touchend', function () {
+    //   var toast = new fries.Toast({ content: "Hi, I'm a Toast notification." });
 
-    }, false);
+    // }, false);
 
     prettyPrint();
 
