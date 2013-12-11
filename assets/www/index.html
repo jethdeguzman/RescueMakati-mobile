@@ -79,14 +79,14 @@
  	  <i style="" class="fa fa-plus-square fa-lg"></i>
  	</a>
  	  <h1 class="title"> &nbsp;RescueMakati</h1>
- 	  <ul class="actions pull-right" style="margin-top:-2px;">
+ 	  <!-- <ul class="actions pull-right" style="margin-top:-2px;">
 
  	  <li><a href="" class="" title="">&nbsp;</a></li>
  	  <li><a href="" class="action" title="">&nbsp;</a></li>
  	  <li><a href="" class="action" title="About us"><i class="fa fa-rocket fa-lg"></i></a></li>
  	  <li><a href="" class="action" title="Signout"><i class="fa fa-sign-out fa-lg"></i></a></li>
  	  	
- 	  </ul>
+ 	  </ul> -->
  	</header>
 
  	<!--tab-->
@@ -115,9 +115,9 @@
 
     		 <b style="display:block; margin-left:10px"><i class="fa fa-exclamation-circle"></i> Choose a type of Emergency:</b>
     		 <center>
-    		 <button class="btn ambulance-btn ebutton" style=""><i class="fa fa-h-square">&nbsp;</i>Ambulance</button><br>
-    		 <button class="btn police-btn ebutton" style="" ><i class="fa fa-shield">&nbsp;</i>Police</button><br>
-    		 <button class="btn fire-truck-btn ebutton" style=" "><i class="fa fa-fire">&nbsp;</i>Fire Truck</button><br> 
+    		 <button class="btn ambulance-btn ebutton" data-request="Ambulance" style=""><i class="fa fa-h-square">&nbsp;</i>Ambulance</button><br>
+    		 <button class="btn police-btn ebutton" data-request="Police" style="" ><i class="fa fa-shield">&nbsp;</i>Police</button><br>
+    		 <button class="btn fire-truck-btn ebutton"  data-request="Fire Truck" style=" "><i class="fa fa-fire">&nbsp;</i>Fire Truck</button><br> 
     		</center>
     		 
     		
@@ -129,10 +129,11 @@
     		<form class="form-flex inset" >
     		  <label class="block-label">Personal Info</label>
     		  <div class="flex-group">
-    		    <input type="text" placeholder="Full Name" class="input-text flex1">
-    		    <input style="width:30%;" type="age" maxlength="2"  placeholder="Age" class="input-text flex1">
+    		  	<input type="hidden" id="userid-input" >
+    		    <input type="text" id="name-input" placeholder="Full Name" class="input-text flex1">
+    		    <input style="width:30%;" id="age-input" type="age-input" maxlength="2"  placeholder="Age" class="input-text flex1">
     		  </div>
-    		  	<input type="tel" class="input-text flex2 mobile-input black" placeholder="Mobile Number">
+    		  	<input type="tel" id="mobile-input" class="input-text flex2 mobile-input black" placeholder="Mobile Number">
     		  
     		  <center>
             	<button class="updateinfo-btn" type="button" class="btn" style="width:50%;">Update</button>
@@ -164,12 +165,13 @@
     </div>
 
   </div>
-  <script src="assets/js/jquery-2.0.0.min.js" type="text/javascript"></script>
+<script src="assets/js/jquery-2.0.0.min.js" type="text/javascript"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 <script type="text/javascript" charset="utf-8" src="assets/js/cordova-2.5.0.js"></script>
-<script src="assets/js/action-bars.js" type="text/javascript"></script>
+<!-- <script src="assets/js/action-bars.js" type="text/javascript"></script> -->
+
 <script src="assets/js/gmaps.js" type="text/javascript"></script>
-  <!-- <script src="assets/js/tabs.js"></script> -->
+
  
 </body>
 <script>
@@ -177,19 +179,19 @@
 	//device initialization
 
 
-	//map initialization	
-	google.maps.event.addDomListener(window, 'load', initialize);
+	
 	
 	
 	$(document).ready(function(){
-    	// alert(checkInternet());
+
+		
+    	setUserInfo('0001','Jethro De Guzman', '21', '09228239751');
 	/*Transition of pages when tab is pressed.*/
 		$(".info-div").hide();	
 		$(".hotlines-div").hide();	
 		$(".home-div").show();	
 		
 		$("#tab1").click(function(e){//show home-div
-
 			e.preventDefault();
 			x = '#'+ $(this).attr('id');
 			showHome(x);
@@ -204,22 +206,28 @@
 			x = '#'+ $(this).attr('id');
 			showHotlines(x);
 		});
-
+		$("#name-input").val(getUserInfo().name);
+		$("#age-input").val(getUserInfo().age);
+		$("#mobile-input").val(getUserInfo().mobile);
 		$(".ebutton").click(function(e){
-			e.preventDefault();
-			state = $(this).attr('disabled');
-			if(state){
-				updateInfoAlert();
-			}
+			request = $(this).data("request");
+			sendEmergency(request);
+
 		});
 
-		$(".updateinfo-btn").click(function(){
-			localStorage.info = "ok";
-		});
+
+
+
+		// $(".updateinfo-btn").click(function(){
+		// 	localStorage.info = "ok";
+		// });
 
 		// $$(".ebutton").prop('disabled', false);
 		// checkInfo();
 	});
+
+	//map initialization	
+	google.maps.event.addDomListener(window, 'load', initialize);
 
 	//check internet connection of user thru server request
 	function checkInternet(){
@@ -283,21 +291,28 @@
 		request = emergency button
 	**/
 	function sendEmergency(request){
-		var server = "";
-		var data = {request : request, name : getUserInfo().name, age : getUserInfo().age, mobile :getUserInfo().mobile, lat : getMapInfo().lat, lng : getMapInfo().lng, address : getMapInfo().address };
-
+		// alert('sending');
+		var server = "http://192.168.1.104:1337/request";
+		var data = JSON.stringify({request : request, userid : getUserInfo().userid, name : getUserInfo().name, age : getUserInfo().age, mobile : getUserInfo().mobile, lat : getMapInfo().lat, lng : getMapInfo().lng, address : getMapInfo().address });
+		
 		$.ajax({
 			url : server,
 			type : "POST",
-			data : data,
-			success :function(){
-
+			data : {
+					data : data
+			},
+			success : function(data){
+				alert(data.status);
+			},
+			error : function(err){
+				console.log(err);
+				alert('error');
 			}
 		});
 	}
 	//setting user info 
-	function setUserInfo(name, age, mobile){
-		var userinfo = {name : name, age : age, mobile : mobile};
+	function setUserInfo(userid, name, age, mobile){
+		var userinfo = {userid : userid, name : name, age : age, mobile : mobile};
 		localStorage.userinfo = JSON.stringify(userinfo);
 	}
 
@@ -306,7 +321,7 @@
 	function getMapInfo(){
 		return {lat : lat, lng : lng, address : address};
 	}
-	//retrieve user info from localStorage
+	//retrieve user info from localStorage.userinfo
 	function getUserInfo(){
 		return JSON.parse(localStorage.userinfo);
 	}
