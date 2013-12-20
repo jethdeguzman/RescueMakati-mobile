@@ -231,7 +231,7 @@
 
 	//check internet connection of user thru server request
 	function checkInternet(){
-		//return true if internet is ok
+		//return true if internet is ok	
 		//return false if intenet is not ok
 		var x = false;
 		$.ajax({
@@ -241,6 +241,7 @@
 			async : false,
 			success: function(data){
 				x = true;
+
 			},
 			error : function(err){
 				x =  false;
@@ -292,7 +293,7 @@
 	**/
 	function sendEmergency(request){
 		// alert('sending');
-		var server = "http://192.168.1.104:1337/request";
+		var server = "http://192.168.1.104:1337/request/add";
 		var data = JSON.stringify({request : request, userid : getUserInfo().userid, name : getUserInfo().name, age : getUserInfo().age, mobile : getUserInfo().mobile, lat : getMapInfo().lat, lng : getMapInfo().lng, address : getMapInfo().address });
 		
 		$.ajax({
