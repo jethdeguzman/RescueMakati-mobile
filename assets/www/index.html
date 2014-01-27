@@ -48,7 +48,7 @@
 		.home-div{
 			height:100%;
 		}
-		#map-canvas{
+		 #map-canvas{
 		  	margin: 0;
 	        padding: 0;
 	        height: 50%;
@@ -101,18 +101,19 @@
     	
     	<!--Content of Home-->
     	
-    	<div class="home-div" style="margin:0px; max-height:800px;">
-    	
+    	<div class="home-div" style="margin:0px;">
+    		
     		<!--Map Container-->
     		 <div id="map-canvas"></div>
-
+    		  <div id="non-btn-grp">
     		 <!--Address Container-->
-    		 <div style=" border-top: 5px solid #393696; border-bottom: 5px solid #393696;text-align:center;  max-height:15%; padding:5px; background-color:#7976D6;">
-    		 <span><i class="fa fa-location-arrow"></i><small id="location" style="padding:0px;">Please wait...</small></span>
+    		 <div  style=" border-top: 5px solid #393696; border-bottom: 5px solid #393696;text-align:center;   padding:5px; background-color:#7976D6;">
+    		 <span ><i class="fa fa-location-arrow"></i><small id="location" style="padding:0px;">Please wait...</small></span>
     		 </div>
 
     		 <b style="display:block; margin-left:10px"><i class="fa fa-exclamation-circle"></i> Choose a type of Emergency:</b>
-    		 <center>
+    		 </div>
+    		 <center id="button-grp">
     		 <button class="btn ambulance-btn ebutton" data-request="Ambulance" style=""><i class="fa fa-h-square">&nbsp;</i>Ambulance</button><br>
     		 <button class="btn police-btn ebutton" data-request="Police" style="" ><i class="fa fa-shield">&nbsp;</i>Police</button><br>
     		 <button class="btn fire-truck-btn ebutton"  data-request="Fire Truck" style=" "><i class="fa fa-fire">&nbsp;</i>Fire Truck</button><br> 
@@ -238,6 +239,19 @@
 	
 	
 	jQuery(function($){
+		var homeHeight = parseFloat($(".home-div").height());
+		var nonbuttonHeight = parseFloat($("#non-btn-grp").height());
+		var mapHeight = parseFloat(homeHeight / 2);
+		var availableHeight = mapHeight - nonbuttonHeight; 
+		var buttonHeight = (availableHeight/3)-10;
+		
+		if(buttonHeight > 50){
+			$(".ebutton").css("height", 50);
+		}else{
+			$(".ebutton").css("height", buttonHeight);
+		}
+		
+
 		$("#tab1").click(function(e){//show home-div
 			e.preventDefault();
 			x = '#'+ $(this).attr('id');
@@ -268,9 +282,20 @@
 			e.preventDefault();
 			request = $(this).data("request");
 			var ready = false;
-			if(checkConnection()){
-				checkUserStatus();
-				// sendEmergency(request);
+			if(checkConnection()){ //check for internet connection
+
+				
+				if(checkUserStatus() == 'active'){ //check if user is active or blocked
+					if(localStorage.location == "true"){ //check if location is in Makati
+						sendEmergency(request);
+					}else{
+						alert("App is functional inside Makati Vicinity only.");
+					}
+					
+				}else{
+					alert("You are blocked by the Command Center");
+				}
+				
 			}else{
 				alert("Network Error");
 				showHotlines("#tab3");

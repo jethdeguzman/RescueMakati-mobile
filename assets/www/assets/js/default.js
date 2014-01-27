@@ -26,7 +26,10 @@
 			async: false,
 			data : {userid : userid},
 			success : function(data){
-				getUserInfo().status = data.status;
+				obj = JSON.parse(localStorage.userinfo);
+				obj.status = data.status;
+				localStorage.userinfo = JSON.stringify(obj);
+				
 			}
 
 		});

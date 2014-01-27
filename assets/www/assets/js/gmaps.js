@@ -36,7 +36,8 @@ function initialize() {
 
       lat = position.coords.latitude;
       lng = position.coords.longitude; 
-      
+      // lat = 14.567676;
+      // lng = 121.04431;
       var url = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=true"; 
       
        
@@ -46,8 +47,19 @@ function initialize() {
           success:function(data){
       //alert(data.results[0].formatted_address);
           //   console.log(data);
+            localStorage.location = "false";
             address = data.results[0].formatted_address;
             $("#location").html(data.results[0].formatted_address);
+            add_comp = data.results[0].address_components;
+            for(var i in add_comp){
+              for (var j in add_comp[i]){
+                if(add_comp[i][j] == "Makati"){
+                  localStorage.location = "true";
+                }
+                  
+                
+              }
+            } 
           // //  alert(data.results[0].geometry.location.lat);
           //   $$(".lat-span").text(data.results[0].geometry.location.lat);
           //   $$(".lng-span").text(data.results[0].geometry.location.lng);
