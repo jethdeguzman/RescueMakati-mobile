@@ -6,31 +6,34 @@
     <script type="text/javascript" charset="utf-8" src="assets/js/cordova-2.5.0.js"></script>
     <script type="text/javascript" charset="utf-8">
 
-    // Call onDeviceReady when Cordova is loaded.
-    //
-    // At this point, the document has loaded but cordova-2.5.0.js has not.
-    // When Cordova is loaded and talking with the native device,
-    // it will call the event `deviceready`.
-    //
-    function onLoad() {
-       document.addEventListener("online", onOnline, false);
-          document.addEventListener("offline", onOffline, false);
-      
-    }
+       // Wait for Cordova to load
+       // 
+       document.addEventListener("deviceready", onDeviceReady, false);
 
-  
+       // Cordova is loaded and it is now safe to make calls Cordova methods
+       //
+       function onDeviceReady() {
+           checkConnection();
+       }
 
-    // Handle the online event
-    //
-    function onOnline() {
-        alert('online');
-    }
-    function onOffline() {
-        alert('offline');
-    }
+       function checkConnection() {
+           var networkState = navigator.connection.type;
 
-    </script>
+           var states = {};
+           states[Connection.UNKNOWN]  = 'Unknown connection';
+           states[Connection.ETHERNET] = 'Ethernet connection';
+           states[Connection.WIFI]     = 'WiFi connection';
+           states[Connection.CELL_2G]  = 'Cell 2G connection';
+           states[Connection.CELL_3G]  = 'Cell 3G connection';
+           states[Connection.CELL_4G]  = 'Cell 4G connection';
+           states[Connection.NONE]     = 'No network connection';
+
+           alert('Connection type: ' + states[networkState]);
+       }
+
+       </script>
   </head>
-  <body onload="onLoad()">
+  <body>
+  network test
   </body>
 </html>

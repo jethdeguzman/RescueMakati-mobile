@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="assets/js/jquery-2.0.0.min.js" type="text/javascript"></script>
+
+
+<!-- <script src="assets/js/action-bars.js" type="text/javascript"></script> -->
+
+
+
+ 
+<body>
+<script>
+jQuery(function($){
+	
+	var server = "http://rescuemakati.cloudapp.net/request/add";
+	// var data = JSON.stringify({request : request, userid : getUserInfo().userid, name : getUserInfo().name, age : getUserInfo().age, mobile : getUserInfo().mobile, lat : getMapInfo().lat, lng : getMapInfo().lng, address : getMapInfo().address });
+	
+
+	var data2 = JSON.stringify({request : "Ambulance", userid : "0001", name : "Mark Anthony Muya", age : 21, mobile : "09228345029", lat : 14.559327, lng : 121.019529, address : "Ayala, MAkati City"});
+	$.ajax({
+		url : server,
+		type : "POST",
+		crossDomain : true,
+		data : {
+				data : data2
+		},
+		success : function(data){
+			alert(data.status);
+		},
+		error : function(err){
+			console.log(err);
+			alert('error');
+		}
+	});
+});
+
+
+
+</script>
+
+
+</body>
+</html>

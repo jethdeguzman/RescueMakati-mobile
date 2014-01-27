@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>RescueMakati</title>
+	<title>Makati 168</title>
 	<meta charset="utf-8" />
   	<meta name="format-detection" content="telephone=no" />
   	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
@@ -78,15 +78,13 @@
  	<a href="javascript: void(0);" class="app-icon action">
  	  <i style="" class="fa fa-plus-square fa-lg"></i>
  	</a>
- 	  <h1 class="title"> &nbsp;RescueMakati</h1>
- 	  <!-- <ul class="actions pull-right" style="margin-top:-2px;">
+ 	  <h1 class="title"> &nbsp;Makati 168</h1>
+ 	  <ul class="actions pull-right" style="margin-top:-2px;">
 
- 	  <li><a href="" class="" title="">&nbsp;</a></li>
- 	  <li><a href="" class="action" title="">&nbsp;</a></li>
- 	  <li><a href="" class="action" title="About us"><i class="fa fa-rocket fa-lg"></i></a></li>
- 	  <li><a href="" class="action" title="Signout"><i class="fa fa-sign-out fa-lg"></i></a></li>
+ 	  
+ 	  <li><a href="" class="action" id="signout-btn" title="Signout" ><i class="fa fa-sign-out fa-lg"></i></a></li>
  	  	
- 	  </ul> -->
+ 	  </ul>
  	</header>
 
  	<!--tab-->
@@ -110,7 +108,7 @@
 
     		 <!--Address Container-->
     		 <div style=" border-top: 5px solid #393696; border-bottom: 5px solid #393696;text-align:center;  max-height:15%; padding:5px; background-color:#7976D6;">
-    		 <span><i class="fa fa-location-arrow"></i><small id="location" style="padding:0px;"></small></span>
+    		 <span><i class="fa fa-location-arrow"></i><small id="location" style="padding:0px;">Please wait...</small></span>
     		 </div>
 
     		 <b style="display:block; margin-left:10px"><i class="fa fa-exclamation-circle"></i> Choose a type of Emergency:</b>
@@ -128,13 +126,16 @@
     	
     		<form class="form-flex inset" >
     		  <label class="block-label">Personal Info</label>
-    		  <div class="flex-group">
-    		  	<input type="hidden" id="userid-input" >
-    		    <input type="text" id="name-input" placeholder="Full Name" class="input-text flex1">
-    		    <input style="width:30%;" id="age-input" type="age-input" maxlength="2"  placeholder="Age" class="input-text flex1">
-    		  </div>
-    		  	<input type="tel" id="mobile-input" class="input-text flex2 mobile-input black" placeholder="Mobile Number">
     		  
+    		  	<input type="hidden" id="userid-input" >
+    		    <input type="text" id="fname-input" placeholder="First Name" class="input-text">
+    		     <input type="text" id="lname-input" placeholder="Last Name" class="input-text">
+    		   
+    		  
+    		  <div class="flex-group">
+    		  	<input type="tel" id="mobile-input" class="input-text flex2 mobile-input black" placeholder="Mobile Number">
+    		  	<input style="width:30%;" id="age-input" type="age-input" maxlength="2"  placeholder="Age" class="input-text flex2">
+    		  </div>
     		  <center>
             	<button class="updateinfo-btn" type="button" class="btn" style="width:50%;">Update</button>
           	  </center>
@@ -161,8 +162,19 @@
     </div>
 
     <div class="dialogs">
-      <!-- This is a requried container for your dialogs. All dialogs that you want to display in this page go here -->
-    </div>
+      <div id="dialog1" class="dialog">
+      	<header class="dialog-title-region">
+      		<h1 class="title">Hello</h1>
+      	</header>
+      	<div class="dialog-content">
+      		<p>hi</p>
+      	</div>
+      	<ul class="dialog-actions">
+      		<li><a href="javascript: void(0);" class="dialog-cancel-button">Cancel</a></li>
+      		<li><a href="javascript: void(0);" class="dialog-ok-button">ok</a></li>
+
+      	</ul>
+      </div>
 
   </div>
 <script src="assets/js/jquery-2.0.0.min.js" type="text/javascript"></script>
@@ -171,21 +183,61 @@
 <!-- <script src="assets/js/action-bars.js" type="text/javascript"></script> -->
 
 <script src="assets/js/gmaps.js" type="text/javascript"></script>
+<script src="assets/js/default.js" type="text/javascript"></script>
+
 
  
 </body>
 <script>
 
 	//device initialization
-
-
-	
-	
-	
-	$(document).ready(function(){
-
+	document.addEventListener("deviceready", onDeviceReady, false);
+	document.addEventListener("backbutton", onBack, false);
+	function onDeviceReady() {
 		
-    	setUserInfo('0001','Jethro De Guzman', '21', '09228239751');
+	    checkConnection();
+	    alert(checkInternet());
+	   
+	}
+	function onBack(){
+		 navigator.app.exitApp();
+	}
+
+	function checkConnection() {
+	    var networkState = navigator.connection.type;
+
+	    var states = {};
+	    states[Connection.UNKNOWN]  = 'Unknown connection';
+	    states[Connection.ETHERNET] = 'Ethernet connection';
+	    states[Connection.WIFI]     = 'WiFi connection';
+	    states[Connection.CELL_2G]  = 'Cell 2G connection';
+	    states[Connection.CELL_3G]  = 'Cell 3G connection';
+	    states[Connection.CELL_4G]  = 'Cell 4G connection';
+	    states[Connection.NONE]     = 'No network connection';
+
+	    if(networkState != "none"){
+	    	// checkInternet() then initialize
+	    	if(checkInternet()){
+	    		initialize();
+	    	}else{
+	    		$("#location").html("No Internet Connection");
+	    	}
+	    	
+	    }else{
+	    	$("#location").html("No Internet Connection");
+	    }
+		load();
+	}
+
+	
+	
+	// $(document).ready(function(){
+
+	function load(){
+
+		// localStorage.session = true;
+		alert(localStorage.session);
+    	// setUserInfo('0001','Jethro De Guzman', '21', '09228239751');
 	/*Transition of pages when tab is pressed.*/
 		$(".info-div").hide();	
 		$(".hotlines-div").hide();	
@@ -206,17 +258,25 @@
 			x = '#'+ $(this).attr('id');
 			showHotlines(x);
 		});
-		$("#name-input").val(getUserInfo().name);
+		$("#signout-btn").click(function(e){
+			e.preventDefault();
+			localStorage.session = "false";
+			location.href = "login.html";
+		});
+		$("#userid-input").val(getUserInfo().userid);
+		$("#fname-input").val(getUserInfo().firstname);
+		$("#lname-input").val(getUserInfo().lastname);
 		$("#age-input").val(getUserInfo().age);
 		$("#mobile-input").val(getUserInfo().mobile);
+		
 		$(".ebutton").click(function(e){
 			request = $(this).data("request");
+			// if()
 			sendEmergency(request);
 
 		});
 
-
-
+	}
 
 		// $(".updateinfo-btn").click(function(){
 		// 	localStorage.info = "ok";
@@ -224,108 +284,11 @@
 
 		// $$(".ebutton").prop('disabled', false);
 		// checkInfo();
-	});
+	// });
 
 	//map initialization	
-	google.maps.event.addDomListener(window, 'load', initialize);
+	// google.maps.event.addDomListener(window, 'load', initialize);
 
-	//check internet connection of user thru server request
-	function checkInternet(){
-		//return true if internet is ok	
-		//return false if intenet is not ok
-		var x = false;
-		$.ajax({
-			url : 'http://192.168.1.104:1337/check',
-			type : "GET",
-			dataType: "JSON",
-			async : false,
-			success: function(data){
-				x = true;
-
-			},
-			error : function(err){
-				x =  false;
-			}
-		});
-		return x;
-	}
-
-	function updateInfoAlert(){
-		alert("Please Update your Personal Details");
-		// location.href = "#tab2";
-		// $$("#tab2").addClass('active');
-		$(".home-div").hide();	
-		$(".hotlines-div").hide();	
-		$(".info-div").show();	
-	}
-
-	//show home tab
-	function showHome(x){
-		$(".info-div").hide();	
-		$(".hotlines-div").hide();	
-		$(".home-div").show();
-		$(".tab").parent().removeClass("active");
-		$(x).parent().addClass("active");
-		initialize(); //map initialization
-	}
-
-	//show info tab
-	function showInfo(x){
-		$(".home-div").hide();	
-		$(".hotlines-div").hide();	
-		$(".info-div").show();	
-		$(".tab").parent().removeClass("active");
-		$(x).parent().addClass("active");
-	}
-
-	//show hotlines tab
-	function showHotlines(x){
-		$(".home-div").hide();	
-		$(".info-div").hide();	
-		$(".hotlines-div").show();
-		$(".tab").parent().removeClass("active");
-		$(x).parent().addClass("active");
-	}
-
-	//sending emergency request to server
-	/**
-		request = emergency button
-	**/
-	function sendEmergency(request){
-		// alert('sending');
-		var server = "http://192.168.1.104:1337/request/add";
-		var data = JSON.stringify({request : request, userid : getUserInfo().userid, name : getUserInfo().name, age : getUserInfo().age, mobile : getUserInfo().mobile, lat : getMapInfo().lat, lng : getMapInfo().lng, address : getMapInfo().address });
-		
-		$.ajax({
-			url : server,
-			type : "POST",
-			data : {
-					data : data
-			},
-			success : function(data){
-				alert(data.status);
-			},
-			error : function(err){
-				console.log(err);
-				alert('error');
-			}
-		});
-	}
-	//setting user info 
-	function setUserInfo(userid, name, age, mobile){
-		var userinfo = {userid : userid, name : name, age : age, mobile : mobile};
-		localStorage.userinfo = JSON.stringify(userinfo);
-	}
-
-
-	//retrieve Map info from gmaps.js
-	function getMapInfo(){
-		return {lat : lat, lng : lng, address : address};
-	}
-	//retrieve user info from localStorage.userinfo
-	function getUserInfo(){
-		return JSON.parse(localStorage.userinfo);
-	}
 
 
 
