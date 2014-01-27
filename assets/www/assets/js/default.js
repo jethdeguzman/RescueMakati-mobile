@@ -12,13 +12,26 @@
 				x = true;
 
 			},
-			error : function(err){
+			error : function(xhr, ajaxOptions, thrownError){
 				x =  false;
 			}
 		});
 		return x;
 	}
+	function checkUserStatus(){
+		userid = getUserInfo().userid;
+		$.ajax({
+			url : 'http://rescuemakati.cloudapp.net/user/status',
+			type : 'GET',
+			async: false,
+			data : {userid : userid},
+			success : function(data){
+				getUserInfo().status = data.status;
+			}
 
+		});
+		return getUserInfo().status;
+	}
 	function updateInfoAlert(){
 		alert("Please Update your Personal Details");
 		// location.href = "#tab2";
@@ -82,8 +95,8 @@
 		});
 	}
 	//setting user info 
-	function setUserInfo(userid, firstname, lastname, age, mobile){
-		var userinfo = {userid : userid, firstname : firstname, lastname : lastname, age : age, mobile : mobile};
+	function setUserInfo(userid, firstname, lastname, age, mobile, status){
+		var userinfo = {userid : userid, firstname : firstname, lastname : lastname, age : age, mobile : mobile, status : status};
 		localStorage.userinfo = JSON.stringify(userinfo);
 	}
 

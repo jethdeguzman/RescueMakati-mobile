@@ -196,7 +196,7 @@
 	function onDeviceReady() {
 		
 	    checkConnection();
-	    alert(checkInternet());
+	  
 	   
 	}
 	function onBack(){
@@ -218,31 +218,26 @@
 	    if(networkState != "none"){
 	    	// checkInternet() then initialize
 	    	if(checkInternet()){
+	    		load();
 	    		initialize();
+	    		return true;
 	    	}else{
+	    		load();
 	    		$("#location").html("No Internet Connection");
+	    		return false;
 	    	}
 	    	
 	    }else{
+	    	load();
 	    	$("#location").html("No Internet Connection");
+	    	return false;
 	    }
-		load();
+		
 	}
 
 	
 	
-	// $(document).ready(function(){
-
-	function load(){
-
-		// localStorage.session = true;
-		alert(localStorage.session);
-    	// setUserInfo('0001','Jethro De Guzman', '21', '09228239751');
-	/*Transition of pages when tab is pressed.*/
-		$(".info-div").hide();	
-		$(".hotlines-div").hide();	
-		$(".home-div").show();	
-		
+	jQuery(function($){
 		$("#tab1").click(function(e){//show home-div
 			e.preventDefault();
 			x = '#'+ $(this).attr('id');
@@ -270,11 +265,32 @@
 		$("#mobile-input").val(getUserInfo().mobile);
 		
 		$(".ebutton").click(function(e){
+			e.preventDefault();
 			request = $(this).data("request");
-			// if()
-			sendEmergency(request);
+			var ready = false;
+			if(checkConnection()){
+				checkUserStatus();
+				// sendEmergency(request);
+			}else{
+				alert("Network Error");
+				showHotlines("#tab3");
+			}
+			
 
 		});
+	});
+
+
+	function load(){
+
+		// localStorage.session = true;
+		
+    	// setUserInfo('0001','Jethro De Guzman', '21', '09228239751');
+	/*Transition of pages when tab is pressed.*/
+		$(".info-div").hide();	
+		$(".hotlines-div").hide();	
+		$(".home-div").show();	
+		
 
 	}
 

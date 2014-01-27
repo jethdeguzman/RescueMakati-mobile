@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="assets/css/font.css" type="text/css">
 	<link rel="stylesheet" href="assets/css/holo-dark/base.css">
 	<link rel="stylesheet" href="assets/css/holo-dark/action-bars.css"> 
-	<link rel="stylesheet" href="assets/css/holo-dark/animations.css">
+	<link rel="stylesheet" href="assescrets/css/holo-dark/animations.css">
 	<link rel="stylesheet" href="assets/css/holo-dark/buttons.css">
 	<link rel="stylesheet" href="assets/css/holo-dark/content.css">
 	<link rel="stylesheet" href="assets/css/holo-dark/dialogs.css">
@@ -28,17 +28,21 @@
 <style type="text/css">
 	.content{
 		color:black;
-		/*background-color:red;*/
-		background: url("assets/images/binding_light/binding_light.png");
+		background-color:#34495E;
+	
 	}
-	body .page{
-		
-	}
+
 	#form{
-		margin: 25% auto;
-		width:100%;
+	
+	
 		height:30%;
+		width:100%;
+		margin: 40% auto;
 		/*border:1px solid black;*/
+	}
+
+	#form input{
+		background: white;
 	}
 	
 </style>
@@ -46,9 +50,12 @@
 <body>
 	<div class="page">
 		<div class="content" >
+		<!-- <div id="header">
+		
+		</div> -->
 			<div id="form">
-			<h1 style="text-align:center">Makati 168</h1>
-			<form class="inset" style="color:black; height:100%; margin:0 auto;">
+			<h1 style="text-align:center; font-size:40px; color:#E74C3C; margin-bottom:5px;"> <i style="font-size:60px;" class="fa fa-plus-square fa-lg"></i> Makati 168</h1>
+			<form class="inset" style="color:black; margin:0 auto;">
 			  
 			 <!--  <div class="flex-group"> -->
 			  	<input type="text" id="email-input"  class="input-text" placeholder="Email">
@@ -58,11 +65,17 @@
 			  	
 			  
 			  <center>
-	        	<button id="login-btn" type="button" class="btn" style="width:100%;">Login</button>
+			  	
+	        	<button id="login-btn" type="button" class="btn" style="width:100%; background:#18AF91;">Login</button>
+	        	<span style="color:white; display:none;" id="loading-span">Please Wait...</span>
 	      	  </center>
 			  
 			</form>
+			<center>
+				<a href="http://rescuemakati.cloudapp.net" style="color:#E74C3C; text-decoration:underline;"><i style="" class="fa fa-question-circle"></i> Sign Up for Makati 168</a>
+			</center>
 			</div>
+			
 		</div>
 	</div>
 </body>
@@ -78,16 +91,18 @@ jQuery(function(){
 		location.href="index.html";
 	}
 	$("#login-btn").click(function(){
+		$("#loading-span").fadeIn();
 		$.ajax({
 			url     : 'http://rescuemakati.cloudapp.net/user/login',
 			type    : 'GET',
 			dataType: 'JSON',
 			data    : {email : $('#email-input').val(), password : $('#password-input').val()},
 			success : function(data){
+				$("#loading-span").hide();
 				if(data.status == 'active'){
 					localStorage.session = "true";
 					var age = new Date().getFullYear() - new Date(data.birthdate).getFullYear();
-					setUserInfo(data.userid, data.firstname, data.lastname, age, data.mobile);
+					setUserInfo(data.userid, data.firstname, data.lastname, age, data.mobile, data.status);
 					location.href="index.html";
 				}else if(data.status == "block"){
 					alert("You are blocked by the Command Center");
@@ -99,7 +114,8 @@ jQuery(function(){
 					alert("Please Register");
 				}
 			},
-			error : function(){
+			error : function(xhr, ajaxOptions, thrownError){
+				$("#loading-span").hide();
 				alert("Network Error");
 			}
 		});

@@ -41,8 +41,10 @@
 <content src="*.gstatic.com" subdomains="true" />
 
     <log level="DEBUG"/>
+      <preference name="orientation" value="portrait" /> 
     <preference name="useBrowserHistory" value="true" />
     <preference name="exit-on-suspend" value="false" />
+  
 <plugins>
     <plugin name="ChildBrowser" value="com.phonegap.plugins.childBrowser.ChildBrowser"/> 
    <plugin name="SplashScreen" value="org.apache.cordova.SplashScreen"/>
