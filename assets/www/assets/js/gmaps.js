@@ -14,7 +14,8 @@ function initialize() {
     navigationControl: false,
     scaleControl: false,
     draggable: false,
-    zoomControl: false
+    zoomControl: false,
+    enableHighAccuracy: true
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
@@ -82,7 +83,7 @@ function initialize() {
 
     }, function() {
       handleNoGeolocation(true);
-    });
+    }, {enableHighAccuracy: true});
 
     
 

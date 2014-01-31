@@ -86,6 +86,11 @@
 
 
 <script>
+document.addEventListener("backbutton", onBack, false);
+function onBack(){
+	 navigator.app.exitApp();
+}
+
 jQuery(function(){
 	if(localStorage.session == "true"){
 		location.href="index.html";
