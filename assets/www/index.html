@@ -262,6 +262,11 @@
 			$(".ebutton").css("height", buttonHeight);
 		}
 		
+		$(".hotline").click(function(e){
+		  e.preventDefault();
+		  var number = $(this).attr('data-number');
+		  window.location = "tel: "+number;
+		});
 
 		$("#tab1").click(function(e){//show home-div
 			e.preventDefault();
@@ -297,11 +302,11 @@
 
 				
 				if(checkUserStatus() == 'active'){ //check if user is active or blocked
-					if(localStorage.location == "true"){ //check if location is in Makati
+					// if(localStorage.location == "true"){ //check if location is in Makati
 						sendEmergency(request);
-					}else{
-						alert("App is functional inside Makati Vicinity only.");
-					}
+					// }else{
+						// alert("App is functional inside Makati Vicinity only.");
+					// }
 					
 				}else{
 					alert("You are blocked by the Command Center");
